@@ -1,0 +1,68 @@
+#!/usr/bin/env bash
+
+## Copyright (C) 2020-2023 Aditya Shakya <adi1090x@gmail.com>
+##
+## Autostart Programs
+
+# i3 dir
+idir="$HOME/.config/i3"
+
+# Kill already running process
+_ps=(xsettingsd ksuperkey pasystray fcitx5)
+for _prs in "${_ps[@]}"; do
+	if [[ `pidof ${_prs}` ]]; then
+		killall -9 ${_prs}
+	fi
+done
+
+# Lauch xsettingsd daemon
+xsettingsd --config="$idir"/xsettingsd &
+
+# polkit agent
+if [[ ! `pidof xfce-polkit` ]]; then
+	/usr/lib/xfce-polkit/xfce-polkit &
+fi
+
+# Enable power management
+xfce4-power-manager &
+
+# Enable Super Keys For Menu
+ksuperkey -e 'Super_L=Alt_L|F1' &
+ksuperkey -e 'Super_R=Alt_L|F1' &
+
+# Fix cursor
+xsetroot -cursor_name left_ptr
+
+# Restore wallpaper
+#hsetroot -root -cover "$idir"/theme/wallpaper
+nitrogen --set-zoom-fill --head=0 "$idir"/theme/wallpaper0
+nitrogen --set-zoom-fill --head=1 "$idir"/theme/wallpaper1
+
+# Lauch notification daemon
+"$idir"/scripts/i3_dunst
+
+# Lauch polybar
+"$idir"/scripts/i3_bar
+
+# Lauch compositor
+"$idir"/scripts/i3_comp
+
+# Start mpd
+# exec mpd &
+# exec mopidy &
+# systemctl is-active --quiet --user mopidy || exec systemctl --user start mopidy &
+
+# Launch Autotiling
+exec autotiling-rs &
+
+# Launch fcitx5
+exec fcitx5 -dr &
+
+# Launch PulseAudio System Tray
+exec pasystray &
+
+# Load Nvidia config
+exec nvidia-settings --load-config-only &
+
+# Launoh Greenclip
+#exec greenclip daemon > /dev/null &

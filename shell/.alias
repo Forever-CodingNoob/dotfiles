@@ -1,0 +1,70 @@
+# Aliases to be sourced from .bashrc, .zshrc, or .zshenv
+
+# omz
+alias zshconfig="geany ~/.zshrc"
+alias ohmyzsh="thunar ~/.oh-my-zsh"
+
+# ls
+alias ls='ls --color=auto --hyperlink=auto --classify=auto'
+alias l='ls -lh'
+alias ll='ls -lah'
+alias la='ls -A'
+alias lm='ls -m'
+alias lr='ls -R'
+alias lg='ls -l --group-directories-first'
+
+# git
+alias gcl='git clone --depth 1'
+alias gi='git init'
+alias ga='git add'
+alias gc='git commit -m'
+alias gp='git push origin master'
+
+# ssh
+alias ssh='TERM=xterm-256color ggh'
+#alias cssh='TERM=xterm-256color ssh' #colored ssh
+
+# gcc/g++
+#compile() {
+#  g++ $1 -o ${1%.*}.out @flags;
+#}
+alias compile='compile-cpp'
+
+# rsync
+cpr() {
+  rsync --archive -hh --partial --info=stats1,progress2 --modify-window=1 "$@"
+}
+mvr() {
+  rsync --archive -hh --partial --info=stats1,progress2 --modify-window=1 --remove-source-files "$@"
+}
+
+# zmv
+autoload -U zmv
+alias zcp='zmv -C' zln='zmv -L'
+
+# pacman
+alias list-packages='pacman -Qi | awk '"'/^Name/{name=\$3} /^Installed Size/{print \$4\$5, name}'"' | sort -h'
+alias list-orphan-packages='pacman -Qidtq | awk '"'/^Name/{name=\$3} /^Installed Size/{print \$4\$5, name}'"' | sort -h'
+
+
+# some conversion utilities
+alias hackmd2pdf='mdf'
+alias hackmd2html='hmd2html'
+alias convert='magick'
+
+# others
+alias df='df -hT'
+alias diff='difft'
+#alias cat='cat -vT'
+alias rm='rm -Ivr'
+alias cp='cp -i'
+alias grep-ast='ast-grep'
+alias dig='dog'
+alias ip='ip -color=auto'
+alias sudo='sudo ' # ONLY the first word of each simple command, if unquoted, is checked to see if it has an alias
+alias sduo='sudo'
+alias ccat='bat'
+alias fuckwebp='for i in *.webp; do convert "$i" "${i%.webp}.png" && rm -i "$i"; done'
+alias ncdu='ncdu --color=dark'
+alias lsuser='awk -F: '"'{printf "'"% 7d:%s\n"'",\$3,\$1}'"' /etc/passwd|sort -n' # list all users with UID
+alias lsgroup='awk -F: '"'{printf "'"% 7d:%s\n"'",\$3,\$1}'"' /etc/group|sort -n' # list all groups with GID

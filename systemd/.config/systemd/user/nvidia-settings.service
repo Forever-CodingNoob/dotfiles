@@ -1,0 +1,10 @@
+[Unit]
+Description=Load nvidia-settings file from ~/.nvidia-settings-rc
+After=graphical-session.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/nvidia-settings --load-config-only
+
+[Install]
+WantedBy=graphical-session.target
