@@ -172,22 +172,6 @@ alias zcp='zmv -C' zln='zmv -L'
 # thefuck
 #eval $(thefuck --alias)
 
-# ripgrep-all + fzf (https://github.com/phiresky/ripgrep-all/wiki/fzf-Integration)
-rga-fzf() {
-	RG_PREFIX="rga --files-with-matches --hidden"
-	local file
-	file="$(
-		FZF_DEFAULT_COMMAND="$RG_PREFIX '$1'" \
-			fzf --sort --preview="[[ ! -z {} ]] && rga --pretty --context 5 {q} {}" \
-				--phony -q "$1" \
-				--bind "change:reload:$RG_PREFIX {q}" \
-				--preview-window="70%:wrap"
-	)" &&
-	echo "opening $file" &&
-	xdg-open "$file"
-}
-
-
 # BEGIN opam configuration
 # This is useful if you're using opam as it adds:
 #   - the correct directories to the PATH

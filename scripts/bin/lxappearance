@@ -1,0 +1,49 @@
+#!/usr/bin/env bash
+# source: https://forum.maboxlinux.org/t/mouse-cursor-size/1060/5
+
+GTK2_RC="$HOME/.gtkrc-2.0"
+GTK3_RC="$HOME/.config/gtk-3.0/settings.ini"
+GTK4_RC="$HOME/.config/gtk-4.0/settings.ini"
+ICON_DEF="$HOME/.icons/default/index.theme"
+XRES="$HOME/.Xresources"
+
+/usr/bin/lxappearance
+
+sleep .5
+#READ Cursor theme name from GTK2_RC 
+read CURTHEME <<< "$(grep gtk-cursor-theme-name ${GTK2_RC} | cut -d'"' -f2)"
+
+# WRITE to GTK3
+if grep "^gtk-cursor-theme-name=${CURTHEME}" ${GTK3_RC};then
+#found
+    :
+else
+    sd "^gtk-cursor-theme-name.*$" "gtk-cursor-theme-name=${CURTHEME}" ${GTK3_RC}
+fi
+
+# WRITE to GTK4
+if grep "^gtk-cursor-theme-name=${CURTHEME}" ${GTK4_RC};then
+#found
+    :
+else
+    sd "^gtk-cursor-theme-name.*$" "gtk-cursor-theme-name=${CURTHEME}" ${GTK4_RC}
+fi
+
+# WRITE to ICON_DEF
+if grep "^Inherits=${CURTHEME}" ${ICON_DEF};then
+    :
+else
+    sd "^Inherits=.*$" "Inherits=${CURTHEME}" ${ICON_DEF}
+fi
+
+# WRITE to .Xresources
+if grep "^Xcursor.theme: ${CURTHEME}" ${XRES};then
+    :
+else
+    if grep Xcursor.theme ${XRES};then
+        sd "^Xcursor.theme:.*$" "Xcursor.theme: ${CURTHEME}" ${XRES}
+    else
+        echo "Xcursor.theme: ${CURTHEME}" >> ${XRES}
+    fi
+    xrdb "$HOME/.Xresources"
+fi

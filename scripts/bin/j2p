@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+if [ "$#" -ne 0 ]; then
+    exit 1
+fi
+
+readarray -t files <<< "$(find . -maxdepth 1 -iregex '\.\/.*\.jpg')"
+for name in "${files[@]}"; do
+    #echo "name:$name"
+    convert "$name" "${name%.*}.png" && rm -i "$name";
+done

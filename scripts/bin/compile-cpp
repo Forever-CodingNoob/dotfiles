@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+
+flags="-Wall -Wextra -Wconversion -Wsign-conversion -Wfatal-errors -Wshadow -fsanitize=address,undefined -g"
+flags_cpp="$flags -std=c++17"
+flags_c="$flags -std=c11"
+source_file=""
+output_file=""
+other_flags=""
+
+# Check if the arguments include '-f', and if so, use the flags in the 'flags' file.
+for (( i=1; i<=$#; i++ )); do
+    if [[ ${!i} == "-f" ]]; then
+        flags_cpp=$(<flags)
+        flags_c=$(<flags)
+        break
+    elif [[ ${!i} == *.cpp || ${!i} == *.c ]]; then
+        source_file="${!i}"
+        break 
+    else
+        other_flags+="${!i} "
+    fi
+done
+
+# Check if the source file ends with ".cpp" or ".c".
+if [[ $source_file == *.cpp ]]; then
+    output_file="${source_file%.cpp}"
+    compiler="g++"
+    flags="$flags_cpp"
+elif [[ $source_file == *.c ]]; then
+    output_file="${source_file%.c}"
+    compiler="gcc"
+    flags="$flags_c"
+else
+    echo "Error: No .cpp or .c file specified."
+    return 1
+fi
+
+# Compile the source file using the appropriate compiler with specified flags.
+$compiler "$source_file" -o "$output_file" $flags $other_flags 
+

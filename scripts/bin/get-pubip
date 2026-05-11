@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+PUBLIC_IP=$(curl -s -m 10 https://icanhazip.com \
+  || curl -s -m 10 https://api.ipify.org \
+  || curl -s -m 10 https://ifconfig.io)
+echo "$PUBLIC_IP" | tr -d '[:space:]'
