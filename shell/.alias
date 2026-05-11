@@ -17,29 +17,32 @@ alias lg='ls -l --group-directories-first'
 #alias find='fd'
 
 # grep
-alias rga='rga --hidden'
+alias rga='rga -uu --follow' # 1st u = --hidden, 2nd u = --no-ignore, 3rd u = --binary
 alias rg='rga' # ripgrep(-all)
 alias grep-ast='ast-grep'
 
 # fzf
 # file edit (modified from https://stackoverflow.com/a/79140119)
 fe() {
-	fd --type f --hidden --follow --exclude .git |
+	local root
+	root="${1:-.}"
+	fd --type f --hidden --follow --exclude .git . "$root" |
 		fzf -m \
-			--sort \
 			--preview 'bat --color=always --style=numbers --line-range=:200 {}' \
 			--bind 'enter:become(vim {+})'
 }
 # file edit with grep (modified from: https://github.com/phiresky/ripgrep-all/wiki/fzf-Integration)
 feg() {
-	RG_PREFIX="rga --files-with-matches --hidden"
-	fzf -m \
-		--sort \
+	local query root
+	query="${1:-}"
+	root="${2:-.}"
+	RG_PREFIX="rga --files-with-matches --hidden --follow"
+	RG_ROOT="$root" fzf -m \
 		--phony \
-		--query "$1" \
-		--bind "start:reload:$RG_PREFIX {q}" \
-		--bind "change:reload:$RG_PREFIX {q}" \
-		--preview "[[ -n {} ]] && rga --pretty --context 5 {q} {}" \
+		--query "$query" \
+		--bind "start:reload:$RG_PREFIX -- {q} "'"$RG_ROOT"'" || true" \
+		--bind "change:reload:$RG_PREFIX -- {q} "'"$RG_ROOT"'" || true" \
+		--preview "[[ -n {} ]] && rga --pretty --context 5 {q} {} || true" \
 		--preview-window "70%:wrap" \
 		--bind 'enter:become(vim {+})'
 }

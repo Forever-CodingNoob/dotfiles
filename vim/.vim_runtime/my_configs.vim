@@ -46,12 +46,17 @@ Plug 'Shougo/ddc-sorter_rank'
 Plug 'tani/ddc-fuzzy'
 "" ================================
 
+"" Lightline
+Plug 'itchyny/lightline.vim'
+Plug 'halkn/lightline-lsp'
+Plug 'mengelbrecht/lightline-bufferline'
+
 "" Colorschemes
 Plug 'sainnhe/sonokai'
 Plug 'catppuccin/vim', { 'as': 'catppuccin' }
 " Plug 'ku1ik/vim-monokai'
 
-"" THeorem Provers
+"" Theorem Provers
 Plug 'whonore/Coqtail'
 Plug 'tamarin-prover/editors'
 
@@ -254,6 +259,67 @@ let g:lsp_settings = {
 "" =======================================
 
 
+"" ========= lightline =======================
+" to show buffers instead of tabs in the tabline, change 'tabs' to 'buffers'
+let g:lightline = {
+      \ 'tabline': {
+      \   'left': [['tabs']],
+      \   'right': [['close']]
+      \ },
+      \ 'tab': {
+	  \   'active': [ 'tabnum', 'relpath', 'modified' ],
+	  \   'inactive': [ 'tabnum', 'relpath', 'modified' ] 
+      \ },
+      \ 'tab_component_function': {
+      \   'relpath': 'LightlineRelPath'
+      \ },
+      \ 'active': {
+      \   'left': [ ['mode', 'paste'],
+      \             ['gitbranch', 'readonly', 'relativepath', 'modified'] ],
+      \   'right': [ [ 'lsp_errors', 'lsp_warnings', 'lsp_ok', 'lineinfo' ],
+      \              [ 'filetype', 'percent' ] ]
+      \ },
+      \ 'component': {
+      \   'readonly': '%{&filetype=="help"?"":&readonly?"":""}',
+      \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}',
+      \   'gitbranch': '%{(exists("*FugitiveHead") && FugitiveHead() !=# "")?" ".FugitiveHead():""}'
+      \ },
+      \ 'component_expand': {
+      \   'buffers': 'lightline#bufferline#buffers',
+      \   'lsp_warnings': 'lightline_lsp#warnings',
+      \   'lsp_errors':   'lightline_lsp#errors',
+      \   'lsp_ok':       'lightline_lsp#ok',
+      \ },
+      \ 'component_type': {
+      \   'buffers': 'tabsel',
+      \   'lsp_warnings': 'warning',
+      \   'lsp_errors':   'error',
+      \   'lsp_ok':       'right',
+      \ },
+      \ 'component_visible_condition': {
+      \   'readonly': '(&filetype!="help"&& &readonly)',
+      \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))',
+      \   'gitbranch': '(exists("*FugitiveHead") && ""!=FugitiveHead())'
+      \ },
+      \ 'separator': { 'left': '', 'right': '' },
+      \ 'subseparator': { 'left': '', 'right': '' }
+      \ }
+
+function! LightlineRelPath(n) abort
+  let bufnr = tabpagebuflist(a:n)[tabpagewinnr(a:n) - 1]
+  let name = bufname(bufnr)
+  return empty(name) ? '[No Name]' : pathshorten(fnamemodify(name, ':.'))
+endfunction
+
+let g:lightline_lsp_signs_ok = ''
+let g:lightline#bufferline#show_number = 2
+let g:lightline#bufferline#number_separator = ' '
+set showtabline=2
+"" ==============================================
+
+
+
+
 "" ========= colorscheme =======================
 " Important!!
 if has('termguicolors')
@@ -267,9 +333,8 @@ let g:sonokai_transparent_background = 2
 let g:sonokai_diagnostic_text_highlight = 1
 let g:sonokai_diagnostic_line_highlight = 0
 let g:sonokai_diagnostic_virtual_text = 'highlighted'
-" let g:lightline = {'colorscheme': 'catppuccin_mocha'}
-let g:lightline = {'colorscheme' : 'sonokai'}
 let g:sonokai_lightline_disable_bold = 0
+let g:lightline.colorscheme = 'sonokai' 
 
 colorscheme sonokai
 
@@ -380,6 +445,32 @@ imap <C-v> <C-r><C-o>+
 " go to next/previous line in insert mode and normal mode
 set whichwrap+=<,>,h,l,b,[,]
 
+" Go to buffer by ordinal number, <leader> is ','
+"nmap <leader>1 <Plug>lightline#bufferline#go(1)
+"nmap <leader>2 <Plug>lightline#bufferline#go(2)
+"nmap <leader>3 <Plug>lightline#bufferline#go(3)
+"nmap <leader>4 <Plug>lightline#bufferline#go(4)
+"nmap <leader>5 <Plug>lightline#bufferline#go(5)
+"nmap <leader>6 <Plug>lightline#bufferline#go(6)
+"nmap <leader>7 <Plug>lightline#bufferline#go(7)
+"nmap <leader>8 <Plug>lightline#bufferline#go(8)
+"nmap <leader>9 <Plug>lightline#bufferline#go(9)
+"nmap <leader>0 <Plug>lightline#bufferline#go(10)
+"nmap <Tab>   <Plug>lightline#bufferline#go_next()
+"nmap <S-Tab> <Plug>lightline#bufferline#go_previous()
+"nmap <leader><Tab>   <Plug>lightline#bufferline#go_next_category()
+"nmap <leader><S-Tab> <Plug>lightline#bufferline#go_previous_category()
+" Delete buffer by ordinal number, <leader> is ','
+"nmap <leader>c1 <Plug>lightline#bufferline#delete(1)
+"nmap <leader>c2 <Plug>lightline#bufferline#delete(2)
+"nmap <leader>c3 <Plug>lightline#bufferline#delete(3)
+"nmap <leader>c4 <Plug>lightline#bufferline#delete(4)
+"nmap <leader>c5 <Plug>lightline#bufferline#delete(5)
+"nmap <leader>c6 <Plug>lightline#bufferline#delete(6)
+"nmap <leader>c7 <Plug>lightline#bufferline#delete(7)
+"nmap <leader>c8 <Plug>lightline#bufferline#delete(8)
+"nmap <leader>c9 <Plug>lightline#bufferline#delete(9)
+"nmap <leader>c0 <Plug>lightline#bufferline#delete(10)
 
 " Go to tab by number, <leader> is ','
 noremap <leader>1 1gt
