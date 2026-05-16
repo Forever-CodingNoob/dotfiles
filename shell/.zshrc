@@ -148,7 +148,7 @@ source $ZSH/oh-my-zsh.sh
 
 source $HOME/.alias
 
-# On-demand rehash
+# On-demand rehash (see https://wiki.archlinux.org/title/Zsh#On-demand_rehash)
 zshcache_time="$(date +%s%N)"
 autoload -Uz add-zsh-hook
 rehash_precmd() {

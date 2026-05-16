@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+set -eu
+
+yay -Syu
+
+if [ -e /tmp/rebuild-qt-aur ]; then
+  rm -f /tmp/rebuild-qt-aur
+
+  pacman -Qqm | grep -E '^qt[56]-' | xargs -r yay -S --rebuildall --answerclean All
+fi

@@ -73,6 +73,7 @@ Plug 'sheerun/vim-polyglot'
 Plug 'bfrg/vim-cpp-modern' " c/c++ highlighting
 Plug 'uiiaoo/java-syntax.vim' " java highlighting
 Plug 'elzr/vim-json'
+Plug 'preservim/vim-markdown' " markdown highlighting
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
 
 "" Others
@@ -195,6 +196,7 @@ let g:lsp_diagnostics_signs_enabled = 0
 " Prettier gutter signs
 let g:lsp_signs_error = {'text': '✗'}
 let g:lsp_signs_warning = {'text': '‼'}
+let g:lsp_document_code_action_signs_enabled = 0
 
 " Lets you see the hover information (e.g. type) by pressing Ctrl+Q
 inoremap <silent> <C-q> <Esc>:LspHover<CR>i
