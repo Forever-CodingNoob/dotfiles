@@ -117,7 +117,7 @@ source $ZSH/oh-my-zsh.sh
 # User configuration
 
 # Read .zprofile
-# source $HOME/.zprofile
+#source $HOME/.zprofile
 
 
 
