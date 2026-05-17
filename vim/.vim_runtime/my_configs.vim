@@ -329,9 +329,9 @@ if has('termguicolors')
 endif
 
 " The configuration options should be placed before `colorscheme sonokai`.
-let g:sonokai_style = 'atlantis'
+let g:sonokai_style = 'andromeda' " perhaps 'atlantis'. i cant really tell the diff b/w the two
 let g:sonokai_better_performance = 1
-let g:sonokai_transparent_background = 2
+let g:sonokai_transparent_background = 1
 let g:sonokai_diagnostic_text_highlight = 1
 let g:sonokai_diagnostic_line_highlight = 0
 let g:sonokai_diagnostic_virtual_text = 'highlighted'
