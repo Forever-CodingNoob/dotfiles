@@ -207,7 +207,7 @@ noremap <silent> <C-d> :LspDefinition<CR>
 
 " highlight lspReference ctermfg=red guifg=red ctermbg=green guibg=green
 let g:lsp_document_highlight_enabled = 1
-let g:lsp_log_file = expand('~/vim-lsp.log') " for debugging
+"let g:lsp_log_file = expand('~/vim-lsp.log') " for debugging
 
 "" =======================================
 

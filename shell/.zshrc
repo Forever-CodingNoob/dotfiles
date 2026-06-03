@@ -64,7 +64,7 @@ zstyle ':omz:update' mode disabled  # disable automatic updates
 # "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
 # or set a custom format using the strftime function format specifications,
 # see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
+HIST_STAMPS="yyyy-mm-dd"
 HISTSIZE=1000000  # practically infinite
 SAVEHIST=1000000  # practically infinite
 #setopt BANG_HIST                 # Treat the '!' character specially during expansion.

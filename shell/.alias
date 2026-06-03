@@ -102,3 +102,4 @@ alias fuckwebp='for i in *.webp; do convert "$i" "${i%.webp}.png" && rm -i "$i";
 alias ncdu='ncdu --color=dark'
 alias lsuser='awk -F: '"'{printf "'"% 7d:%s\n"'",\$3,\$1}'"' /etc/passwd|sort -n' # list all users with UID
 alias lsgroup='awk -F: '"'{printf "'"% 7d:%s\n"'",\$3,\$1}'"' /etc/group|sort -n' # list all groups with GID
+alias ssd-health='sudo smartctl -a /dev/nvme0'
