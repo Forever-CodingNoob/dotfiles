@@ -1,11 +1,18 @@
 #!/usr/bin/env bash
 
-DIR="$(dirname $(realpath notes.md))"
+DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
-for d in $DIR/*/; do
-    stow -vt "$HOME" "${d%/}";
+home_packages=(alacritty fcitx5 gtk i3 neofetch nvidia qt screen scripts shell systemd vesktop vim x11 xdg)
+system_packages=(pacman-hooks)
+
+for pkg in "${home_packages[@]}"; do
+	stow -v -t "$HOME" -d "$DIR" "$pkg"
 done
 
-chmod +x $DIR/scripts/bin/*
+for pkg in "${system_packages[@]}"; do
+	sudo stow -v -t / -d "$DIR" "$pkg"
+done
+
+chmod +x "$DIR"/scripts/bin/*
 
 systemctl --user daemon-reload && systemctl --user enable --now greenclip.service nvidia-settings.service

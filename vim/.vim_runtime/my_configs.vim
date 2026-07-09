@@ -36,8 +36,8 @@ Plug 'Shougo/ddc-ui-pum'
 Plug 'Shougo/pum.vim'
 
 "" Install your sources
-Plug 'shun/ddc-source-vim-lsp'
-" Plug 'Shougo/ddc-source-lsp'
+" Plug 'shun/ddc-source-vim-lsp'
+Plug 'Shougo/ddc-source-lsp'
 Plug 'Shougo/ddc-source-around'
 
 "" Install your filters
@@ -108,7 +108,7 @@ call plug#end()
 call ddc#custom#patch_global('ui', 'native')
 "call ddc#custom#patch_global('ui', 'pum')
 call ddc#custom#patch_global({
-    \'sources': ['vim-lsp', 'around'],
+    \'sources': ['lsp', 'around'],
     \'sourceOptions': {
         \'_': {
             \'matchers': ['matcher_fuzzy'],
@@ -118,17 +118,21 @@ call ddc#custom#patch_global({
         \'around': {
             \'mark': 'A'
         \},
-        \'vim-lsp': {
-            \'mark': 'lsp'
+        \'lsp': {
+            \'mark': 'lsp',
+            \'dup': v:true,
+            \'isVolatile': v:true,
+            \'forceCompletionPattern': '\.\w*|:\w*|->\w*'
         \}
     \},
     \'sourceParams': {
         \'around': {
             \'maxSize': 300 
         \},
-        \'vim-lsp': {
-            \'ignoreCompleteProvider': v:true,
-            \'dup': v:true
+        \'lsp': {
+            \'lspEngine': 'vim-lsp',
+            \'enableResolveItem': v:true,
+            \'enableAdditionalTextEdit': v:true
         \}
     \}   
 \})
