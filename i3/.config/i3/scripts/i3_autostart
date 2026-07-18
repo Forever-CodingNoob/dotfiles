@@ -66,3 +66,6 @@ exec nvidia-settings --load-config-only &
 
 # Launoh Greenclip
 #exec greenclip daemon > /dev/null &
+
+# Launch libinput-gestures if a touchpad is detected
+udevadm info --export-db | grep -q '^E: ID_INPUT_TOUCHPAD=1$' && libinput-gestures-setup start
