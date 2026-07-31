@@ -1,0 +1,6 @@
+[Unit]
+Description=Fix OpenShell sandbox token permissions
+
+[Service]
+Type=oneshot
+ExecStart=%h/bin/openshell-token-permissions

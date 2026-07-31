@@ -1,0 +1,9 @@
+[Unit]
+Description=Watch OpenShell sandbox tokens
+
+[Path]
+PathChanged=%h/.local/state/openshell/docker-sandbox-tokens/default
+Unit=openshell-token-permissions.service
+
+[Install]
+WantedBy=default.target
