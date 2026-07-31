@@ -82,6 +82,7 @@ Plug 'RRethy/vim-hexokinase'
 Plug 'lambdalisue/vim-fern' " file tree viewer
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+Plug 'mbpowers/nvimager' " inline markdown image/gif/video/pdf/LaTeX previewer using ueberzug
 
 " Initialize plugin system
 " - Automatically executes `filetype plugin indent on` and `syntax enable`.
@@ -388,6 +389,7 @@ let g:vim_markdown_strikethrough = 1
 let g:vim_markdown_frontmatter = 1
 " let g:vim_markdown_json_frontmatter = 1
 let g:vim_markdown_new_list_item_indent = 2
+let g:vim_markdown_borderless_table = 1
 "" ==============================================
 
 
@@ -413,6 +415,11 @@ let g:fzf_vim.preview_window = ['right,50%', 'ctrl-/']
 let g:UltiSnipsExpandTrigger = '<tab>'
 let g:UltiSnipsJumpForwardTrigger = '<tab>'
 let g:UltiSnipsJumpBackwardTrigger = '<s-tab>'
+"" ==============================================
+
+
+"" =========nvimager config======================
+nmap <leader>qq <Plug>NvimagerToggle
 "" ==============================================
 
 

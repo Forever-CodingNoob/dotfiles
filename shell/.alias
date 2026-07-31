@@ -88,6 +88,7 @@ alias hackmd2html='hmd2html'
 alias convert='magick'
 
 # others
+alias tree='tree -pugh -L 3'
 alias df='df -hT'
 alias diff='difft'
 #alias cat='cat -vT'

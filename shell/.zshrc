@@ -99,7 +99,7 @@ eval "$(pyenv init - zsh)"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git ssh-agent thefuck zsh-autosuggestions virtualenv)
+plugins=(git ssh-agent thefuck mise zsh-autocomplete zsh-autosuggestions virtualenv)
 
 # Ohmyzsh ssh-agent plugin
 zstyle :omz:plugins:ssh-agent identities id_ed25519
@@ -112,7 +112,26 @@ zstyle :omz:plugins:ssh-agent lazy yes
 fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src 
 
 
+
 source $ZSH/oh-my-zsh.sh
+
+
+
+# zsh-autocomplete
+zstyle ':autocomplete:*' add-semicolon no
+zstyle ':autocomplete:*complete*:*' insert-unambiguous yes # all Tab widgets
+zstyle ':autocomplete:*history*:*' insert-unambiguous yes # all history widgets
+zstyle ':autocomplete:menu-select:*' insert-unambiguous yes
+zstyle ':autocomplete:menu-search:*' insert-unambiguous yes # ^S
+zstyle ':completion:*:*' matcher-list 'm:{[:lower:]-}={[:upper:]_}' '+r:|[.]=**' # insert prefix instead of substring
+bindkey              '^I' menu-select
+bindkey "$terminfo[kcbt]" menu-select
+bindkey -M menuselect              '^I'         menu-complete
+bindkey -M menuselect "$terminfo[kcbt]" reverse-menu-complete
+
+# zsh-autosuggestions
+unset ZSH_AUTOSUGGEST_USE_ASYNC
+
 
 # User configuration
 
@@ -162,12 +181,12 @@ rehash_precmd() {
 }
 add-zsh-hook -Uz precmd rehash_precmd
 
-# asdf
-. /opt/asdf-vm/asdf.sh
-
 # zmv
 autoload -U zmv
 alias zcp='zmv -C' zln='zmv -L'
+
+# mise, the ultimate tool manager
+eval "$(mise activate zsh)"
 
 # thefuck
 #eval $(thefuck --alias)
